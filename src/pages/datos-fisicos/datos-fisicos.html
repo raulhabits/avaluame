@@ -1,0 +1,52 @@
+<!--
+  Generated template for the DatosFisicosPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Datos Físicos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <form (ngSubmit)="saveData()">
+
+        <ion-list>
+            <ion-list>
+                <ion-list-header>Información general del inmueble</ion-list-header>
+                <ion-item>
+                  <ion-label floating>Área del terreno</ion-label>
+                  <ion-input type="number" [(ngModel)]="landArea" [ngModelOptions]="{standalone:true}"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label floating>Área construida</ion-label>
+                  <ion-input type="number" [(ngModel)]="builtArea" [ngModelOptions]="{standalone:true}"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label floating>Observaciones sobre ZHFG</ion-label>
+                  <ion-input type="text" [(ngModel)]="ZHFGComments" [ngModelOptions]="{standalone:true}"></ion-input>
+                </ion-item>
+              </ion-list>
+              <ion-list>
+                <ion-list-header>Información adicional de área construida</ion-list-header>
+                <ion-item>
+                  
+                </ion-item>
+              </ion-list>
+              <button ion-button>
+                Agregar área construida
+              </button>
+              <button ion-button type="submit" large>
+                Guardar campos
+              </button>
+        </ion-list>
+        
+      </form>
+
+</ion-content>

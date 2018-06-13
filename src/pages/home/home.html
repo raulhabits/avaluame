@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Avalua.me</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Avalua.me</h3>
+
+  <ion-list no-lines>
+    <ion-item>
+      Aplicacion para encontrar bladsf blasdfa adfasdfasdfadsfaf adfa sdfasdf
+    </ion-item>
+
+    <button ion-item [navPush]="datosBasicosPage">
+      Lanzar datos basicos
+    </button>
+    <button ion-item [navPush]="datosFisicosPage">
+      Lanzar datos físicos
+    </button>
+    <button ion-item [navPush]="calificacionPage">
+      Lanzar encuesta
+    </button>
+    <button ion-item [navPush]="geoPositionPage">
+      Lanzar encuesta
+    </button>
+  </ion-list>
+</ion-content>
