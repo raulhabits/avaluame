@@ -11,21 +11,31 @@
   <h3>Avalua.me</h3>
 
   <ion-list no-lines>
-    <ion-item>
+    <p>
       Aplicacion para encontrar bladsf blasdfa adfasdfasdfadsfaf adfa sdfasdf
-    </ion-item>
+    </p>
 
-    <button ion-item [navPush]="datosBasicosPage">
+    <button ion-button full (click)="loadPage(datosBasicosPage, 'basicData')">
       Lanzar datos basicos
     </button>
-    <button ion-item [navPush]="datosFisicosPage">
+    <button ion-button full (click)="loadPage(datosFisicosPage, 'physicalData')">
       Lanzar datos físicos
     </button>
-    <button ion-item [navPush]="calificacionPage">
-      Lanzar encuesta
+    <button ion-button full (click)="loadPage(areaConstruidaPage, 'additionalBuiltAreaData')">
+      Información area construida
     </button>
-    <button ion-item [navPush]="geoPositionPage">
-      Lanzar encuesta
+    <button ion-button full (click)="loadPage(informacionJuridicaPage, 'owners')">
+      Información jurídica
     </button>
+    <button ion-button full (click)="loadGeolocationPage()">
+      Croquis
+    </button>
+    <ion-item>
+        <ion-label floating>Elaborado por:</ion-label>
+        <ion-input type="text" [(ngModel)]="avaluoService.getAvaluo().madeBy" [ngModelOptions]="{standalone:true}"></ion-input>
+      </ion-item>
+    <button ion-button  full (click)="loadResultadoPage()">
+        Visualizar reporte
+      </button>
   </ion-list>
 </ion-content>

@@ -14,6 +14,17 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ItemListService } from '../models/rates/rate-list';
 import { AgmCoreModule } from '@agm/core';
+import { AvaluoService } from '../models/avaluo';
+import { AreaConstruidaPage } from '../pages/area-construida/area-construida';
+import { AreaConstruidaCreatePage } from '../pages/area-construida-create/area-construida-create';
+import { Geolocation } from '@ionic-native/geolocation';
+import { File } from '@ionic-native/file';
+import { Camera } from '@ionic-native/camera';
+import { FileOpener } from '@ionic-native/file-opener';
+import { LoadPdfProvider } from '../providers/load-pdf/load-pdf';
+import { DocumentViewer } from '@ionic-native/document-viewer';
+import {  HttpClientModule } from '@angular/common/http';
+import { InformacionJuridicaPage } from '../pages/informacion-juridica/informacion-juridica';
 
 @NgModule({
   declarations: [
@@ -23,14 +34,18 @@ import { AgmCoreModule } from '@agm/core';
     CalificacionPage,
     DatosBasicosPage,
     DatosFisicosPage,
-    GeoPositionPage
+    AreaConstruidaPage,
+    AreaConstruidaCreatePage,
+    GeoPositionPage,
+    InformacionJuridicaPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyC2WBU0zgzptHX8-XSeWJIchalFbkCuHT0'
-    })
+      apiKey: ''
+    }),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -40,13 +55,24 @@ import { AgmCoreModule } from '@agm/core';
     CalificacionPage,
     DatosBasicosPage,
     DatosFisicosPage,
-    GeoPositionPage
+    AreaConstruidaPage,
+    AreaConstruidaCreatePage,
+    GeoPositionPage,
+    InformacionJuridicaPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     ItemListService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    AvaluoService,
+    DocumentViewer,
+    LoadPdfProvider,
+    Geolocation,
+    Camera,
+    File,
+    FileOpener,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    LoadPdfProvider
   ]
 })
 export class AppModule {}

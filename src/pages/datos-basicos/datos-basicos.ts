@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AbstractFormGroup } from '../../models/formulario';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { DatosBasicos, AvaluoService } from '../../models/avaluo';
 
 /**
  * Generated class for the DatosBasicosObservacionesInicialesPage page.
@@ -12,19 +12,15 @@ import { AbstractFormGroup } from '../../models/formulario';
 @IonicPage()
 @Component({
   selector: 'page-datos-basicos',
-  templateUrl: 'datos-basicos.html',
+  templateUrl: 'datos-basicos.html'
 })
-export class DatosBasicosPage extends AbstractFormGroup {
+export class DatosBasicosPage {
 
-  requestNumber: string;
-  sectorCode: string;
-  mainAddress: string;
-  secondaryAddress: string;
+  data: DatosBasicos = new DatosBasicos();
 
-  initialComments: string;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    super();
+  constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController) {
+    this.data = this.navParams.data;
+    console.log(this.data);
   }
 
   ionViewDidLoad() {
@@ -32,8 +28,8 @@ export class DatosBasicosPage extends AbstractFormGroup {
   }
 
   saveData() {
-    console.log(this);
-
+    console.log("save data", this.data);
+    this.view.dismiss(this.data);
   }
 
 }

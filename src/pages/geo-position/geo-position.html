@@ -15,50 +15,43 @@
 
 <ion-content padding>
 
-  <form (ngSubmit)="saveData()" [formGroup]="form">
-    <ion-list>
-      <div id="mapa">
-        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [usePanning]="true" [disableDefaultUI]="false" [zoomControl]="false"
-          [mapTypeId]="mapType" (centerChange)="centerChange($event)" (zoomChange)="zoomChange($event)" (mapClick)="mapClicked($event)">
+  <ion-list>
+    <div id="mapa">
+      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [usePanning]="true" [disableDefaultUI]="false" [zoomControl]="false"
+        [mapTypeId]="mapType" (centerChange)="centerChange($event)" (zoomChange)="zoomChange($event)" (mapClick)="mapClicked($event)">
 
-          <agm-marker (markerClick)="currentPoint" [latitude]="currentPoint.lat" [longitude]="currentPoint.lng">
+        <agm-marker (markerClick)="currentPoint" [latitude]="currentPoint.lat" [longitude]="currentPoint.lng">
 
-          </agm-marker>
-        </agm-map>
-      </div>
+        </agm-marker>
+      </agm-map>
+    </div>
 
-      <button (click)="takePicture()">
-        Capturar imagen del mapa
-      </button>
-
-      <ion-input type="hidden" formControlName="img" required></ion-input>
-      <div *ngIf="img.value">
-        <ion-list>
-          <ion-item>
-            Vista previa
-          </ion-item>
-          <ion-item>
-            Vista previa {{img.value}}
-          </ion-item>
-          <ion-item>
-            <img [src]="img.value" (load)="onLoad()"/>
-          </ion-item>
-        </ion-list>
-      </div>
-      <div *ngIf="img.errors">
-        <ion-item>
-          Debe capturar la imagen del mapa
-        </ion-item>
-      </div>
-
-    </ion-list>
-
-    <button ion-button type="submit" large>
-      Guardar campos
+    <button ion-button full (click)="takePicture()">
+      Capturar imagen del mapa
     </button>
-  </form>
 
+    <div *ngIf="img">
+      <ion-list>
+        <ion-item>
+          Vista previa
+        </ion-item>
 
+        <ion-item>
+          <img [src]="img" (load)="onLoad()" />
+        </ion-item>
+      </ion-list>
+    </div>
+    <div *ngIf="!img">
+      <ion-item>
+        Debe capturar la imagen del mapa para generar preview
+      </ion-item>
+    </div>
+
+  </ion-list>
+
+  <button ion-button full (click)="saveData()">
+    Guardar campos
+  </button>
 
 
 </ion-content>

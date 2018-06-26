@@ -6,48 +6,45 @@
 -->
 <ion-header>
 
-    <ion-navbar>
-      <ion-title>Datos básicos</ion-title>
-    </ion-navbar>
-  
-  </ion-header>
-  
-  
-  <ion-content padding>
-  
-    <form (ngSubmit)="saveData()">
-  
-      <ion-list>
-          <ion-list>
-              <ion-list-header>Datos básicos de la solicitud</ion-list-header>
-              <ion-item>
-                <ion-label floating>Solicitud N°</ion-label>
-                <ion-input type="text" [(ngModel)]="requestNumber" [ngModelOptions]="{standalone:true}"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label floating>Código sector</ion-label>
-                <ion-input type="text" [(ngModel)]="sectorCode" [ngModelOptions]="{standalone:true}"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label floating>Nomenclatura principal</ion-label>
-                <ion-input type="text" [(ngModel)]="mainAddress" [ngModelOptions]="{standalone:true}"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label floating>Nomenclatura secundaria</ion-label>
-                <ion-input type="text" [(ngModel)]="secondaryAddress" [ngModelOptions]="{standalone:true}"></ion-input>
-              </ion-item>
-            </ion-list>
-            <ion-list>
-              <ion-list-header>Observaciones iniciales</ion-list-header>
-              <ion-item>
-                <ion-input type="text" [(ngModel)]="initialComments" placeholder="Agregar observaciones iniciales" [ngModelOptions]="{standalone:true}"></ion-input>
-              </ion-item>
-            </ion-list>
-            <button ion-button type="submit" large icon-right>
-              Guardar campos
-            </button>
-      </ion-list>
-      
-    </form>
-  
-  </ion-content>
+  <ion-navbar>
+    <ion-title>Datos básicos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-list>
+      <ion-list-header>Datos básicos de la solicitud</ion-list-header>
+      <ion-item>
+        <ion-label floating>Solicitud N°</ion-label>
+        <ion-input type="text" [(ngModel)]="data.requestNumber" [ngModelOptions]="{standalone:true}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Código sector</ion-label>
+        <ion-input type="text" [(ngModel)]="data.sectorCode" [ngModelOptions]="{standalone:true}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Nomenclatura principal</ion-label>
+        <ion-input type="text" [(ngModel)]="data.mainAddress" [ngModelOptions]="{standalone:true}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Nomenclatura secundaria</ion-label>
+        <ion-input type="text" [(ngModel)]="data.secondaryAddress" [ngModelOptions]="{standalone:true}"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-list-header>Observaciones iniciales</ion-list-header>
+      <ion-item>
+        <ion-textarea type="text" [(ngModel)]="data.initialComments" placeholder="Agregar observaciones iniciales" [ngModelOptions]="{standalone:true}"></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <button ion-button type="button" full icon-right (click)="saveData()">
+      Continuar
+    </button>
+  </ion-list>
+
+
+</ion-content>

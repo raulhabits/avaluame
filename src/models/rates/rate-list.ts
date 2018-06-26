@@ -1,5 +1,6 @@
-import { Item, Usages, Types, SubTypes, ItemValues, ItemEnumType } from "./item";
+
 import { Injectable } from "@angular/core";
+import { OptionItem, Usage, Type, SubType, Option } from "./item";
 
 @Injectable()
 export class ItemListService {
@@ -10,65 +11,53 @@ export class ItemListService {
         this.setupRates();
     }
 
-    private rates : Item[] = new Array();
+    private rates : OptionItem[] = new Array();
     setupRates(){
     this.rates = new Array(
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.ARMAZON, ItemValues.MADERA),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.ARMAZON, ItemValues.PREFABRICADO),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.ARMAZON, ItemValues.LADRILLO_BLOQUE),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.ARMAZON, ItemValues.CONCRETO_HASTA_TRES_PISOS),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.ARMAZON, ItemValues.CONCRETO_CUATRO_MAS_PISOS),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.MUROS, ItemValues.MATERIALES_DESECHO_ESTERILLA),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.MUROS, ItemValues.BAHAREQUE_ADOBE_TAPIA),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.MUROS, ItemValues.CONCRETO_PREFABRICADO),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.MUROS, ItemValues.BLOQUE_LADRILLO),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.CUBIERTA, ItemValues.MATERIALES_DESECHO_TEJAS_ASFALTICAS),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.CUBIERTA, ItemValues.ZINC_TEJA_BARRO_ETERNIT_RUSTICO),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.CUBIERTA, ItemValues.ENTREPISO_PREFABRICADO),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.CUBIERTA, ItemValues.ETERNIT_TEJA_BARRO),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.CUBIERTA, ItemValues.AZOTEA_ALUMINIO_PLACA_SENCILLA_ETERNIT_TEJA_BARRO),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.CUBIERTA, ItemValues.PLACA_IMPERMEABILIZADA_CUBIERTA_LUJOSA_ORNAMENTAL),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.CONSERVACION, ItemValues.MALO),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.CONSERVACION, ItemValues.REGULAR),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.CONSERVACION, ItemValues.BUENO),
-        new Item(Usages.RESIDENCIAL, Types.ESTRUCTURA, SubTypes.CONSERVACION, ItemValues.EXCELENTE),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.ARMAZON, Option.MADERA),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.ARMAZON, Option.PREFABRICADO),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.ARMAZON, Option.LADRILLO_BLOQUE),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.ARMAZON, Option.CONCRETO_HASTA_TRES_PISOS),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.ARMAZON, Option.CONCRETO_CUATRO_MAS_PISOS),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.MUROS, Option.MATERIALES_DESECHO_ESTERILLA),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.MUROS, Option.BAHAREQUE_ADOBE_TAPIA),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.MUROS, Option.CONCRETO_PREFABRICADO),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.MUROS, Option.BLOQUE_LADRILLO),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.CUBIERTA, Option.MATERIALES_DESECHO_TEJAS_ASFALTICAS),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.CUBIERTA, Option.ZINC_TEJA_BARRO_ETERNIT_RUSTICO),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.CUBIERTA, Option.ENTREPISO_PREFABRICADO),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.CUBIERTA, Option.ETERNIT_TEJA_BARRO),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.CUBIERTA, Option.AZOTEA_ALUMINIO_PLACA_SENCILLA_ETERNIT_TEJA_BARRO),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.CUBIERTA, Option.PLACA_IMPERMEABILIZADA_CUBIERTA_LUJOSA_ORNAMENTAL),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.CONSERVACION, Option.MALO),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.CONSERVACION, Option.REGULAR),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.CONSERVACION, Option.BUENO),
+        new OptionItem(Usage.RESIDENCIAL, Type.ESTRUCTURA, SubType.CONSERVACION, Option.EXCELENTE),
+        
+        new OptionItem(Usage.INDUSTRIAL_COMERCIAL, Type.ESTRUCTURA, SubType.CONSERVACION, Option.EXCELENTE),
 
+        new OptionItem(Usage.RESIDENCIAL, Type.ACABADOS, SubType.FACHADAS, Option.POBRE),
+        new OptionItem(Usage.RESIDENCIAL, Type.ACABADOS, SubType.FACHADAS, Option.SENCILLA),
+        new OptionItem(Usage.RESIDENCIAL, Type.ACABADOS, SubType.FACHADAS, Option.REGULAR),
+        new OptionItem(Usage.RESIDENCIAL, Type.ACABADOS, SubType.FACHADAS, Option.BUENA),
+        new OptionItem(Usage.RESIDENCIAL, Type.ACABADOS, SubType.FACHADAS, Option.LUJOSA),
+        
     );
 
     }
-    public getRatesByUsageAndType(usage: ItemEnumType, type: ItemEnumType) : Item[] {
-        console.log(this.rates);
+    public getUsages() : Set<Usage> {
+        return new Set(this.rates.map(item => item.usage));
+    }
+
+    public getTypeByUsage(usage: string) : Set<Type> {
+        return new Set(this.rates.filter(item => item.usage == usage).map(item => item.type));
+    }
+    
+    public getRatesByUsageAndType(usage: string, type: string) : OptionItem[] {
         return this.rates.filter(item => item.usage == usage).filter(item => item.type == type);
     }
 
-    public getSubtypeRates(usage: ItemEnumType, type: ItemEnumType) : Set<ItemEnumType>  {
+    public getSubtypeRates(usage: string, type: string) : Set<SubType>  {
         return new Set(this.getRatesByUsageAndType(usage, type).map(item => item.subtype));
     }
 }
-
-/*
-export const RATES : Item[] = [
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.ARMAZON, value: ItemValue.MADERA},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.ARMAZON, value: ItemValue.PREFABRICADO},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.ARMAZON, value: ItemValue.LADRILLO_BLOQUE},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.ARMAZON, value: ItemValue.CONCRETO_HASTA_TRES_PISOS},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.ARMAZON, value: ItemValue.CONCRETO_CUATRO_MAS_PISOS},
-    
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.MUROS, value: ItemValue.MATERIALES_DESECHO_ESTERILLA},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.MUROS, value: ItemValue.BAHAREQUE_ADOBE_TAPIA},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.MUROS, value: ItemValue.CONCRETO_PREFABRICADO},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.MUROS, value: ItemValue.BLOQUE_LADRILLO},
-    
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.CUBIERTA, value: ItemValue.MATERIALES_DESECHO_TEJAS_ASFALTICAS},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.CUBIERTA, value: ItemValue.ZINC_TEJA_BARRO_ETERNIT_RUSTICO},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.CUBIERTA, value: ItemValue.ENTREPISO_PREFABRICADO},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.CUBIERTA, value: ItemValue.ETERNIT_TEJA_BARRO},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.CUBIERTA, value: ItemValue.AZOTEA_ALUMINIO_PLACA_SENCILLA_ETERNIT_TEJA_BARRO},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.CUBIERTA, value: ItemValue.PLACA_IMPERMEABILIZADA_CUBIERTA_LUJOSA_ORNAMENTAL},
-    
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.CONSERVACION, value: ItemValue.MALO},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.CONSERVACION, value: ItemValue.REGULAR},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.CONSERVACION, value: ItemValue.BUENO},
-    {usage:usage.RESIDENCIAL, Types: Type.ESTRUCTURA, SubTypes: SubType.CONSERVACION, value: ItemValue.EXCELENTE},
-];
-*/

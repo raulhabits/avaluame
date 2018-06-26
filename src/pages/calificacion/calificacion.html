@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Calificación</ion-title>
+    <ion-title>Calificación {{type.toLowerCase()}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,40 +15,41 @@
 
 <ion-content padding>
 
-  <form (ngSubmit)="saveData()">
-    <ion-list>
-      <div *ngFor="let subtype of subtypes">
-        {{subtype.description}}
-        <ion-list>
-          <div *ngFor="let item of getItemsBySubtype(subtype); let i= index">
-            <ion-list radio-group [(ngModel)]="answer[subtype.propName]" [ngModelOptions]="{standalone:true}">
-              <ion-item>
-                <ion-label>{{item.value.description}}</ion-label>
-                <ion-radio checked="{{answer[subtype.propName] == item}}" (click)="selectProperty(subtype, item)"></ion-radio>
-              </ion-item>
-            </ion-list>
-          </div>
-        </ion-list>
-      </div>
+  <ion-list>
+    <div *ngFor="let subtype of subtypes">
+      {{subtype}}
+      <ion-list>
+        <div >
+          
+          <ion-list radio-group >
+            <ion-item *ngFor="let item of getItemsBySubtype(subtype); let i= index">
+              <ion-label >{{item.option}}</ion-label>
+                <ion-radio (click)="selectProperty(subtype, item)" [checked]="isOptionSelected(item)" [value]="item">
+              </ion-radio>
+              
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-list>
+    </div>
 
-      <ion-item [hidden]="!image">
-        <img [src]="image" (load)="onLoad()"/>
-      </ion-item>
+    <ion-item [hidden]="!image">
+      <img [src]="image" (load)="onLoad()" />
+    </ion-item>
 
-      <ion-item>
-        <button type="button" ion-button  large (click)="takePicture()">
-          <ion-icon name="camera"></ion-icon>
-        </button>
+    <ion-item>
+      <button type="button" ion-button full (click)="takePicture()">
+        <ion-icon name="camera"></ion-icon>
+      </button>
 
-      </ion-item>
+    </ion-item>
 
-      <ion-item>
-        <button ion-button type="submit" large icon-right>
-          Guardar información
-        </button>
-      </ion-item>
-    </ion-list>
-  </form>
+    <ion-item>
+      <button ion-button  full (click)="saveData()" large icon-right>
+        Guardar información
+      </button>
+    </ion-item>
+  </ion-list>
 
 
 </ion-content>

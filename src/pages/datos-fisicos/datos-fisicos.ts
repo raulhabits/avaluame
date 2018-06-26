@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { UsageEnum, Usages } from '../../models/rates/item';
-import { AbstractFormGroup } from '../../models/formulario';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { DatosFisicos } from '../../models/avaluo';
+import { ItemListService } from '../../models/rates/rate-list';
 
 @IonicPage()
 @Component({
   selector: 'page-datos-fisicos',
   templateUrl: 'datos-fisicos.html',
+  providers:[ItemListService]
 })
-export class DatosFisicosPage extends AbstractFormGroup {
+export class DatosFisicosPage {
 
-  landArea: number;
-  builtArea: number;
-  usage: UsageEnum;
-  ZHFGObservations: string;
+  data: DatosFisicos = new DatosFisicos();
+  usages: any;
 
-  usages = Usages;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    super();
+  constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController,  public itemListService: ItemListService) {
+    this.data = this.navParams.data;
+    
+    this.usages = itemListService.getUsages();
+    console.log(this.data);
   }
 
   ionViewDidLoad() {
@@ -26,7 +26,7 @@ export class DatosFisicosPage extends AbstractFormGroup {
   }
 
   saveData() {
-    console.log(this);
-
+    console.log("save data", this.data);
+    this.view.dismiss(this.data);
   }
 }

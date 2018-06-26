@@ -15,38 +15,35 @@
 
 <ion-content padding>
 
-    <form (ngSubmit)="saveData()">
+  <ion-list>
+    <ion-list>
+      <ion-list-header>Información general del inmueble</ion-list-header>
+      <ion-item>
+        <ion-label floating>Área del terreno</ion-label>
+        <ion-input type="number" [(ngModel)]="data.landArea" [ngModelOptions]="{standalone:true}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Área construida</ion-label>
+        <ion-input type="number" [(ngModel)]="data.builtArea" [ngModelOptions]="{standalone:true}"></ion-input>
+      </ion-item>
 
-        <ion-list>
-            <ion-list>
-                <ion-list-header>Información general del inmueble</ion-list-header>
-                <ion-item>
-                  <ion-label floating>Área del terreno</ion-label>
-                  <ion-input type="number" [(ngModel)]="landArea" [ngModelOptions]="{standalone:true}"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label floating>Área construida</ion-label>
-                  <ion-input type="number" [(ngModel)]="builtArea" [ngModelOptions]="{standalone:true}"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label floating>Observaciones sobre ZHFG</ion-label>
-                  <ion-input type="text" [(ngModel)]="ZHFGComments" [ngModelOptions]="{standalone:true}"></ion-input>
-                </ion-item>
-              </ion-list>
-              <ion-list>
-                <ion-list-header>Información adicional de área construida</ion-list-header>
-                <ion-item>
-                  
-                </ion-item>
-              </ion-list>
-              <button ion-button>
-                Agregar área construida
-              </button>
-              <button ion-button type="submit" large>
-                Guardar campos
-              </button>
-        </ion-list>
-        
-      </form>
+      <ion-item>
+        Destino económico
+      </ion-item>
+      <ion-item>
+        <ion-select [(ngModel)]="data.usage" >
+          <ion-option value="{{usage}}" *ngFor="let usage of usages">{{usage}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Observaciones sobre ZHFG</ion-label>
+        <ion-textarea type="text" [(ngModel)]="data.ZHFGComments" [ngModelOptions]="{standalone:true}"></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <button ion-button type="button" full (click)="saveData()">
+      Guardar campos
+    </button>
+  </ion-list>
 
 </ion-content>

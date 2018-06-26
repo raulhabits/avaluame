@@ -1,0 +1,82 @@
+<!--
+  Generated template for the AreaConstruidaPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Área construida</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+
+    <ion-list>
+      <ion-card *ngFor="let area of data; let i = index">
+        <ion-list>
+          <ion-item>
+            Tipo:
+          </ion-item>
+          <ion-item *ngIf="!data[i].usage">
+            <ion-select [(ngModel)]="data[i].usage" *ngIf="!data[i].usage">
+              <ion-option value="{{usage}}" *ngFor="let usage of usages">{{usage}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item *ngIf="data[i].usage">
+            {{data[i].usage}}
+          </ion-item>
+          <ion-item>
+            Unidad
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" [(ngModel)]="data[i].unit" [ngModelOptions]="{standalone:true}" placeholder="Agregue la unidad"></ion-input>
+          </ion-item>
+          <ion-item>
+            Área
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" [(ngModel)]="data[i].area" [ngModelOptions]="{standalone:true}" placeholder="Agregue el área"></ion-input>
+          </ion-item>
+          <ion-item>
+            Vetustez
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" [(ngModel)]="data[i].vetustez" [ngModelOptions]="{standalone:true}" placeholder="Agregue la vetustez"></ion-input>
+          </ion-item>
+          <ion-item>
+            Comentarios
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" [(ngModel)]="data[i].comments" [ngModelOptions]="{standalone:true}" placeholder="Agregue los comentarios"></ion-input>
+          </ion-item>
+
+          <ion-item center>
+              <button ion-button  (click)="deleteBuiltArea(i)">
+                  Eliminar área
+                </button>
+                <button ion-button (click)="fillRateOfBuiltArea(i)">
+                  Calificar área
+                </button>
+          </ion-item>
+        </ion-list>
+
+      </ion-card>
+      <button ion-button full (click)="addBuiltArea()">
+        Agregar área construida
+      </button>
+
+    </ion-list>
+
+    <button ion-button full (click)="saveData()">
+      Continuar
+    </button>
+
+  </ion-list>
+
+</ion-content>
