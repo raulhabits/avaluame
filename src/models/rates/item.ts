@@ -1,12 +1,15 @@
 
 export enum Usage {
-    RESIDENCIAL="RESIDENCIAL",
+    RESIDENCIAL = "RESIDENCIAL",
     INDUSTRIAL_COMERCIAL = "COMERCIAL"
 }
 
 export enum Type {
-    ESTRUCTURA= "ESTRUCTURA",
-    ACABADOS= "ACABADOS"
+    ESTRUCTURA = "ESTRUCTURA",
+    ACABADOS_PRINCIPALES = "ACABADOS PRINCIPALES",
+    BANYO = "BAÑO",
+    COCINA = "COCINA",
+    COMPLEMENTO_INDUSTRIA = "COMPLEMENTO INDUSTRIA"
 }
 
 export enum SubType {
@@ -15,7 +18,16 @@ export enum SubType {
     CUBIERTA = "CUBIERTA",
     CONSERVACION = "CONSERVACION",
 
-    FACHADAS = "FACHADAS"
+    FACHADAS = "FACHADAS",
+    CUBRIMIENTO_MUROS = "CUBRIMIENTO MUROS",
+    PISOS = "PISOS",
+
+    TAMANYO = "TAMAÑO",
+    ENCHAPES = 'ENCHAPES',
+    MOBILIARIO = 'MOBILIARIO',
+
+    CERCHAS = "CERCHAS"
+
 }
 
 export enum Option {
@@ -40,12 +52,52 @@ export enum Option {
     MALO = "Malo",
     REGULAR = "Regular",
     BUENO = "Bueno",
-    EXCELENTE = "Excelente",    
+    EXCELENTE = "Excelente",
 
     POBRE = "Pobre",
     SENCILLA = "Sencilla",
-    BUENA  ="Buena",
-    LUJOSA = "Lujosa"
+    BUENA = "Buena",
+    LUJOSA = "Lujosa",
+
+    SIN_CUBRIMIENTO = "Sin cubrimiento",
+    PANYETE_LADRILLO_PRENSADO = "Pañete, ladrillo prensado",
+    ESTUCO_CERAMICA_PAPEL_COLGADURA = "Estuco, cerámica, papel colgadura",
+    MADERA_PIEDRA_ORNAMENTAL = "Madera, piedra ornamental",
+    MARMOL_LUJOS_OTROS = "Marmol, lujos y otros",
+
+    TIERRA_PISADA = "Tierra pisada",
+    CEMENTO_MADERA_BURDA = "Cemento, madera burda",
+    BALDOSA_COMUN_CEMENTO_TABLON_LADRILLO = "Baldosa común, cemento, tablón, ladrillo",
+    LISTON_MACHIHEMBRIADO = "Listón machihembriado",
+    TABLETA_CAUCHO_ACRILICO_GRANITO_BALDOSA_FINA = "Tableta, caucho, acrílico, granito, baldosa fina",
+    PARQUET_ALFOMBRA_RETAL_DE_MARMOL_GRANO_PEQUENYO = "Parquet, alfombra, retal demármol ( grano pequeño )",
+    RETAL_MARMOL_MARMOL_OTROS_LUJOS = "Retal mármol, mármol, otros lujos",
+
+    SIN_BANYO = "Sin baño",
+    BANYO_PEQUENYO = "Pequeño ( 0 - 4 m2 )",
+    BANYO_MEDIANO = "Mediano ( 4 - 6 m2 )",
+    BANYO_GRANDE = "Grande >  6 m2",
+
+    PANYETE_BALDOSA_COMUN_CEMENTO = "Pañete, baldosa común, cemento",
+    BALDOSIN_CRISTANAC_PAPEL = "Baldosín ( < 11 x 11 cm ) cristanac - papel",
+    BALDOSIN_CERAMICA = "Baldosín ( > 11 x 11 cm ) cerámica",
+    MARMOL_ENCHAPE_LUJOSO = "Mármol, enchape lujoso",
+
+    SENCILLO = "Sencillo",
+    LUJOSO = "Lujoso",
+
+
+    SIN_COCINA = "Sin cocina",
+    COCINA_PEQUENYA = "Cocina pequeña ( 0 - 5 m2 )",
+    COCINA_MEDIANA = "Cocina mediana ( 5 - 10 m2 )",
+    COCINA_GRANDE = "Cocina grande >  10 m2",
+
+    METALICA_LIVIANA = "Metálica liviana (luz menor a 10 m)",
+    METALICA_MEDIANA = "Metálica mediana (luz 10 - 20 m)",
+    METALICA_PESADA = "Metálica pesada (luz mayor a 10 m)",
+    ALTURA_MAYOR_7M_COLUMNA_PUENTE_GRUA = "Altura mayor a 7m en columna - puenta grúa"
+
+
 }
 
 export class OptionItem {
@@ -55,7 +107,8 @@ export class OptionItem {
     option: Option;
     value: number;
 
-    constructor(usage: Usage, type: Type, subtype: SubType, option: Option) {
+    constructor(value: number, usage: Usage, type: Type, subtype: SubType, option: Option) {
+        this.value = value;
         this.usage = usage;
         this.type = type;
         this.subtype = subtype;

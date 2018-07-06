@@ -22,8 +22,8 @@
         <div >
           
           <ion-list radio-group >
-            <ion-item *ngFor="let item of getItemsBySubtype(subtype); let i= index">
-              <ion-label >{{item.option}}</ion-label>
+            <ion-item *ngFor="let item of getItemsBySubtype(subtype); let i= index" class="rate">
+              <ion-label ><div class="text-rate-content"><b>[ + {{item.value}} ]</b> {{item.option}}</div></ion-label>
                 <ion-radio (click)="selectProperty(subtype, item)" [checked]="isOptionSelected(item)" [value]="item">
               </ion-radio>
               
@@ -46,7 +46,7 @@
 
     <ion-item>
       <button ion-button  full (click)="saveData()" large icon-right>
-        Guardar información
+        Continuar
       </button>
     </ion-item>
   </ion-list>

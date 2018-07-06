@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ModalController, ModalOptions, Modal } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController, ModalOptions, Modal, AlertController } from 'ionic-angular';
 import { InformacionAdicionalAreaConstruida } from '../../models/avaluo';
 import { AreaConstruidaCreatePage } from '../area-construida-create/area-construida-create';
 import { CalificacionPage } from '../calificacion/calificacion';
@@ -27,7 +27,7 @@ export class AreaConstruidaPage {
   usageEnum = Usage;
   usages: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController, public modalController: ModalController, public itemListService: ItemListService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController, public modalController: ModalController, public alertCtrl: AlertController, public itemListService: ItemListService) {
     this.data = this.navParams.data;
     this.usages = Array.from(itemListService.getUsages());
     console.log(this);
@@ -49,18 +49,29 @@ export class AreaConstruidaPage {
 
   fillRateOfBuiltArea(index: number) {
     console.log(this);
-    let config: ModalOptions = {
-      enableBackdropDismiss:true
-    };
-    let modal: Modal = this.modalController.create(AreaConstruidaCreatePage, this.data[index], config);
-    modal.onDidDismiss(data => {
-      if(data) {
-        console.log("Return OK", data);
-      } else {
-        console.log("Vacio");
-      }
-    });
-    modal.present();
+    if(this.data[index].usage) {
+      let config: ModalOptions = {
+        enableBackdropDismiss:true
+      };
+      let modal: Modal = this.modalController.create(AreaConstruidaCreatePage, this.data[index], config);
+      modal.onDidDismiss(data => {
+        if(data) {
+          console.log("Return OK", data);
+          this.data[index] = data;
+        } else {
+          console.log("Vacio");
+        }
+      });
+      modal.present();
+    } else {
+      const alert = this.alertCtrl.create({
+        title: 'Lo sentimos',
+        subTitle: 'Para ir al menu de calificaciones debe seleccionar un uso para el área construida',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    
   }
 
   saveData() {

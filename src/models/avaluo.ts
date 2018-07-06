@@ -64,6 +64,16 @@ export class InformacionAdicionalAreaConstruida {
         return this.images.get(key);
     }
 
+    getRateValue(): number {
+        let value = 0;
+        if(this.rates) {
+            this.rates.forEach(rate => {
+                value += rate.value;
+            });
+        }
+        return value;
+    }
+
 }
 
 export class DatosGeoreferenciacion {

@@ -5,7 +5,7 @@ import { File, DirectoryEntry } from '@ionic-native/file';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { Platform } from 'ionic-angular';
+import { Platform, Loading, LoadingController } from 'ionic-angular';
 import { DocumentViewerOptions, DocumentViewer } from '@ionic-native/document-viewer';
 import { Avaluo } from '../../models/avaluo';
 
@@ -36,155 +36,265 @@ export class LoadPdfProvider {
   }
 
   getDocumentDefinition() {
-    let imageSize = 350;
+    let imageWidth = 250;
     let currentDate = new Date();
-    let documentDefinition = { content: [] , styles: {}};
+    let documentDefinition = { content: [], styles: {} };
 
     documentDefinition.styles = {
-      header: {
-        fontSize: 10,
-        bold: true,
-        alignment: 'right'
+      date: {
+        fontSize: 14,
+        alignment: 'center'
       },
       headerTitle: {
-        fontSize: 24,
+        fontSize: 25,
         bold: true,
         alignment: 'center'
       },
       sectionTitle: {
         fontSize: 16,
         bold: true,
-        alignment: 'left'
+        alignment: 'center'
       },
       subSectionTitle: {
         fontSize: 14,
         bold: true,
         alignment: 'left'
       },
-      content: {        
-        fontSize: 10,
+      content: {
+        fontSize: 12,
         bold: false,
         alignment: 'left'
       },
-      imageStyle: {
-        alignment: 'center'
+      fieldSeparator: {
+        alignment: 'center',
+        fontSize: 10
       }
-      
+
     };
 
 
     documentDefinition.content.push({ text: 'INFORME VISITA TÉCNICA PUNTUAL', style: ['headerTitle'] });
-    documentDefinition.content.push({ text: 'OBSERVACIONES INICIALES' , style: ['sectionTitle'] });
-    documentDefinition.content.push({ text: this.avaluo.basicData.initialComments ? this.avaluo.basicData.initialComments : 'No registra.' });
-    documentDefinition.content.push({ text: 'DATOS BÁSICOS DE SOLICITUD' , style: ['sectionTitle']});
-    documentDefinition.content.push({ text: 'Solicitud N°:' , style: ['subSectionTitle'] });
-    documentDefinition.content.push({ text: this.avaluo.basicData.requestNumber ? this.avaluo.basicData.requestNumber : 'No registra.' });
-    documentDefinition.content.push({ text: 'Código sector:'  , style: ['subSectionTitle']});
-    documentDefinition.content.push({ text: this.avaluo.basicData.sectorCode ? this.avaluo.basicData.sectorCode : 'No registra.' });
-    documentDefinition.content.push({ text: 'Nómenclatura principal:'  , style: ['subSectionTitle']});
-    documentDefinition.content.push({ text: this.avaluo.basicData.mainAddress ? this.avaluo.basicData.mainAddress : 'No registra.' });
-    documentDefinition.content.push({ text: 'Nómenclatura secundaria:'  , style: ['subSectionTitle']});
-    documentDefinition.content.push({ text: this.avaluo.basicData.secondaryAddress ? this.avaluo.basicData.secondaryAddress : 'No registra.' });
-    documentDefinition.content.push({ text: 'INFORMACIÓN FÍSICA DEL INMUEBLE' , style: ['sectionTitle']});
-    documentDefinition.content.push({ text: 'Área del terreno:'  , style: ['subSectionTitle']});
-    documentDefinition.content.push({ text: this.avaluo.physicalData.landArea ? this.avaluo.physicalData.landArea : 'No registra.' });
-    documentDefinition.content.push({ text: 'Área construida:'  , style: ['subSectionTitle']});
-    documentDefinition.content.push({ text: this.avaluo.physicalData.builtArea ? this.avaluo.physicalData.builtArea : 'No registra.' });
-    documentDefinition.content.push({ text: 'Destino económico:'  , style: ['subSectionTitle']});
-    documentDefinition.content.push({ text: this.avaluo.physicalData.usage ? this.avaluo.physicalData.usage : 'No registra.' });
-    documentDefinition.content.push({ text: 'Observaciones sobre ZHFG:'  , style: ['subSectionTitle']});
-    documentDefinition.content.push({ text: this.avaluo.physicalData.ZHFGObservations ? this.avaluo.physicalData.ZHFGObservations : 'No registra.' });
-    documentDefinition.content.push({ text: 'INFORMACIÓN ADICIONAL ÁREA CONSTRUIDA' , style: ['sectionTitle']});
 
+    documentDefinition.content.push({ text: ' ', style: ['headerTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['headerTitle'] });
 
+    documentDefinition.content.push({ text: 'OBSERVACIONES INICIALES', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: this.avaluo.basicData.initialComments ? this.avaluo.basicData.initialComments : 'No registra.', style: ['content'] });
+
+    documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: 'DATOS BÁSICOS DE SOLICITUD', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: 'Solicitud N°:', style: ['subSectionTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: this.avaluo.basicData.requestNumber ? this.avaluo.basicData.requestNumber : 'No registra.', style: ['content'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: 'Código sector:', style: ['subSectionTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: this.avaluo.basicData.sectorCode ? this.avaluo.basicData.sectorCode : 'No registra.', style: ['content'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: 'Nómenclatura principal:', style: ['subSectionTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: this.avaluo.basicData.mainAddress ? this.avaluo.basicData.mainAddress : 'No registra.', style: ['content'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: 'Nómenclatura secundaria:', style: ['subSectionTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: this.avaluo.basicData.secondaryAddress ? this.avaluo.basicData.secondaryAddress : 'No registra.', style: ['content'] });
+
+    documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: 'INFORMACIÓN FÍSICA DEL INMUEBLE', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: 'Área del terreno:', style: ['subSectionTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: this.avaluo.physicalData.landArea ? this.avaluo.physicalData.landArea : 'No registra.', style: ['content'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: 'Área construida:', style: ['subSectionTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: this.avaluo.physicalData.builtArea ? this.avaluo.physicalData.builtArea : 'No registra.', style: ['content'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: 'Destino económico:', style: ['subSectionTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: this.avaluo.physicalData.usage ? this.avaluo.physicalData.usage : 'No registra.', style: ['content'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: 'Observaciones sobre ZHFG:', style: ['subSectionTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: this.avaluo.physicalData.ZHFGObservations ? this.avaluo.physicalData.ZHFGObservations : 'No registra.', style: ['content'] });
+
+    documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: 'INFORMACIÓN ADICIONAL ÁREA CONSTRUIDA', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
 
 
     let areas = [];
 
     this.avaluo.additionalBuiltAreaData.forEach(area => {
       let areaDocument = [];
-      areaDocument.push({ text: 'Tipo:'  , style: ['subSectionTitle']});
-      areaDocument.push({ text: area.type ? area.type : 'No registra.' });
-      areaDocument.push({ text: 'Unidad:'  , style: ['subSectionTitle']});
-      areaDocument.push({ text: area.unit ? area.unit : 'No registra.' });
-      areaDocument.push({ text: 'Uso:'  , style: ['subSectionTitle']});
-      areaDocument.push({ text: area.usage ? area.usage : 'No registra.' });
-      areaDocument.push({ text: 'Vetustez:'  , style: ['subSectionTitle']});
-      areaDocument.push({ text: area.vetustez ? area.vetustez : 'No registra.' });
-      let sum = 0;
+      
+      areaDocument.push({ text: 'Calificación de área registrada:' + area.getRateValue(), style: ['subSectionTitle'] });
+      areaDocument.push({ text: ' ', style: ['fieldSeparator'] });
+      areaDocument.push({ text: 'Tipo:', style: ['subSectionTitle'] });
+      areaDocument.push({ text: ' ', style: ['fieldSeparator'] });
+      areaDocument.push({ text: area.type ? area.type : 'No registra.', style: ['content'] });
+      areaDocument.push({ text: ' ', style: ['fieldSeparator'] });
+      areaDocument.push({ text: 'Unidad:', style: ['subSectionTitle'] });
+      areaDocument.push({ text: ' ', style: ['fieldSeparator'] });
+      areaDocument.push({ text: area.unit ? area.unit : 'No registra.', style: ['content'] });
+      areaDocument.push({ text: ' ', style: ['fieldSeparator'] });
+      areaDocument.push({ text: 'Uso:', style: ['subSectionTitle'] });
+      areaDocument.push({ text: ' ', style: ['fieldSeparator'] });
+      areaDocument.push({ text: area.usage ? area.usage : 'No registra.', style: ['content'] });
+      areaDocument.push({ text: ' ', style: ['fieldSeparator'] });
+      areaDocument.push({ text: 'Vetustez:', style: ['subSectionTitle'] });
+      areaDocument.push({ text: ' ', style: ['fieldSeparator'] });
+      areaDocument.push({ text: area.vetustez ? area.vetustez : 'No registra.', style: ['content'] });
+      areaDocument.push({ text: ' ', style: ['fieldSeparator'] });
 
       let areaRates = [];
 
+      areaDocument.push({ text: 'Calificaciones registradas', style: ['subSectionTitle'] });
+      areaDocument.push({ text: ' ', style: ['fieldSeparator'] });
 
       area.rates.forEach(rate => {
-        areaRates.push({ text: 'Calificacion de ' + rate.usage.toLowerCase() + ' - ' + rate.type.toLowerCase() + ' - ' + rate.subtype.toLowerCase() + ':' + rate.option.toLowerCase() });
+        areaRates.push({ text: '[ + ' + rate.value + ' ]' + ' por calificación del item ' + rate.usage.toLowerCase() + ' - ' + rate.type.toLowerCase() + ' - ' + rate.subtype.toLowerCase() + ':' + rate.option.toLowerCase() });
       });
 
-      areaDocument.push({ul:areaRates});
+      if (areaRates.length !== 0) {
+        areaDocument.push({ ul: areaRates });
+      } else {
+        areaDocument.push({ text: 'No registra.', style: ['content'] });
+      }
 
-      if (area.images.size != 0) {
-        areaDocument.push({ text: 'Imágenes recolectadas'  , style: ['subSectionTitle']});
+      if (area.images.size !== 0) {
+
+        areaDocument.push({ text: ' ', style: ['content'] });
+        areaDocument.push({ text: 'Imágenes registradas', style: ['subSectionTitle'] });
         let imageExist = false;
-        area.getImageKeys().forEach(image => {
-          if(area.getImage(image)) {
+        area.getImageKeys().forEach(imageKey => {
+          if (area.getImage(imageKey)) {
             imageExist = true;
-            console.log(area.getImage(image));
-          areaDocument.push({ width: imageSize, image: area.getImage(image) });
+
+            areaDocument.push({ text: ' ', style: ['content'] });
+            areaDocument.push({ width: imageWidth, image: area.getImage(imageKey), style: ['fieldSeparator'] });
+            areaDocument.push({ text: imageKey, style: ['fieldSeparator'] });
           }
         });
-        if(!imageExist) {
-          areaDocument.push({text: 'No tiene imagenes registradas.'});
+        if (!imageExist) {
+          areaDocument.push({ text: ' ', style: ['content'] });
+          areaDocument.push({ text: 'No tiene imagenes registradas.' });
+          areaDocument.push({ text: ' ', style: ['content'] });
         }
       }
       areas.push(areaDocument);
     });
 
-    if(areas.length !== 0) {
+    documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
+
+    if (areas.length !== 0) {
+      let total = 0;
+      this.avaluo.additionalBuiltAreaData.forEach(area => {
+        total += area.getRateValue();
+      });
+      documentDefinition.content.push({ text: 'La calificacion total obtenida en la visita es de ' + total + '. A continuación se muestran los criterios de evaluación tenidos en cuenta con su respectiva calificación.', style: ['subSectionTitle'] });
+
+      documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
+
       documentDefinition.content.push({ ul: areas });
     } else {
-      documentDefinition.content.push({ text: 'No registra.' });
+      documentDefinition.content.push({ text: 'No registra calificaciones.', style: ['content'] });
     }
+
+    documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
 
     let owners = [];
-    documentDefinition.content.push({ text: 'INFORMACION DE ASPECTO JURIDICO' , style: ['sectionTitle']});
+    documentDefinition.content.push({ text: 'INFORMACION DE ASPECTO JURIDICO', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
 
     this.avaluo.owners.forEach(owner => {
-      documentDefinition.content.push({ text: 'Tipo de identificación:' , style: ['subSectionTitle'] });
-      documentDefinition.content.push({ text: owner.idType ? owner.idType : 'No registra.' });
-      documentDefinition.content.push({ text: 'Numero identificación:'  , style: ['subSectionTitle']});
-      documentDefinition.content.push({ text: owner.id ? owner.id : 'No registra.'});
-      documentDefinition.content.push({ text: 'Nombres:'  , style: ['subSectionTitle']});
-      documentDefinition.content.push({ text: owner.firstName ? owner.firstName : 'No registra.' });
-      documentDefinition.content.push({ text: 'Apellidos:'  , style: ['subSectionTitle']});
-      documentDefinition.content.push({ text: owner.lastName ? owner.lastName : 'No registra.'});
+      let ownerData = [];
+      ownerData.push({ text: 'Tipo de identificación:', style: ['subSectionTitle'] });
+      ownerData.push({ text: ' ', style: ['fieldSeparator'] });
+      ownerData.push({ text: owner.idType ? owner.idType : 'No registra.', style: ['content'] });
+      ownerData.push({ text: ' ', style: ['fieldSeparator'] });
+      ownerData.push({ text: 'Numero identificación:', style: ['subSectionTitle'] });
+      ownerData.push({ text: ' ', style: ['fieldSeparator'] });
+      ownerData.push({ text: owner.id ? owner.id : 'No registra.', style: ['content'] });
+      ownerData.push({ text: ' ', style: ['fieldSeparator'] });
+      ownerData.push({ text: 'Nombres:', style: ['subSectionTitle'] });
+      ownerData.push({ text: ' ', style: ['fieldSeparator'] });
+      ownerData.push({ text: owner.firstName ? owner.firstName : 'No registra.', style: ['content'] });
+      ownerData.push({ text: ' ', style: ['fieldSeparator'] });
+      ownerData.push({ text: 'Apellidos:', style: ['subSectionTitle'] });
+      ownerData.push({ text: ' ', style: ['fieldSeparator'] });
+      ownerData.push({ text: owner.lastName ? owner.lastName : 'No registra.', style: ['content'] });
+      owners.push(ownerData);
     });
 
-    if(owners.length !== 0) {
-      documentDefinition.content.push({ul: owners});
+    if (owners.length !== 0) {
+      documentDefinition.content.push({ ul: owners });
     } else {
-      documentDefinition.content.push({ text: 'No registra.' });
+      documentDefinition.content.push({ text: 'No registra.', style: ['content'] });
     }
+
+    documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
+
+
+
+    documentDefinition.content.push({ text: 'CROQUIS', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
+
+    documentDefinition.content.push({ text: 'Coordenadas:', style: ['subSectionTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+    documentDefinition.content.push({ text: 'Latitud: ' + (this.avaluo.geoLocationData.latitude ? this.avaluo.geoLocationData.latitude : 'No registra.') + " Longitud: " + (this.avaluo.geoLocationData.longitude ? this.avaluo.geoLocationData.longitude : 'No registra.') });
+
+    if (this.avaluo.geoLocationData.image) {
+      documentDefinition.content.push({ text: ' ', style: ['subSectionTitle'] });
+      documentDefinition.content.push({ width: imageWidth, image: this.avaluo.geoLocationData.image, style: ['fieldSeparator'] });
+      documentDefinition.content.push({ text: 'Vista previa en el mapa', style: ['fieldSeparator'] });
+    } else {
+      documentDefinition.content.push({ text: ' ', style: ['fieldSeparator'] });
+      documentDefinition.content.push({ text: 'No registra imagen en el mapa.', style: ['content'] });
+    }
+
+
+    documentDefinition.content.push({ text: ' ', style: ['headerTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['headerTitle'] });
+
+    documentDefinition.content.push({ text: 'Este informe fue realizado por,', style: ['content'] });
+
+    documentDefinition.content.push({ text: ' ', style: ['headerTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['headerTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['headerTitle'] });
+    documentDefinition.content.push({ text: ' ', style: ['headerTitle'] });
+
+    documentDefinition.content.push({ text: this.avaluo.madeBy ? this.avaluo.madeBy : 'No registra.', style: ['headerTitle'] });
     
+    let date = new Date();
+    let dd = date.getDate();
+    var mm = date.getMonth() + 1;
 
+    let meses = ['','Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
-    documentDefinition.content.push({ text: 'CROQUIS' , style: ['sectionTitle']});
-    documentDefinition.content.push({text: 'Coordenadas:' , style: ['subSectionTitle']});
-    documentDefinition.content.push({text: 'Latitud: ' + (this.avaluo.geoLocationData.latitude ? this.avaluo.geoLocationData.latitude : 'No registra.') + " Longitud: " + (this.avaluo.geoLocationData.longitude ? this.avaluo.geoLocationData.longitude : 'No registra.')});
-    documentDefinition.content.push({text: 'Vista previa en el mapa:' , style: ['subSectionTitle']});
-    if(this.avaluo.geoLocationData.image) {
-      documentDefinition.content.push({width: imageSize, image: this.avaluo.geoLocationData.image});
-    } else {
-      documentDefinition.content.push({ text: 'No registra.' });
-    }
+    documentDefinition.content.push({ text: meses[mm] + ' ' + dd + ' de ' + date.getFullYear(), style: ['date'] });
 
-    documentDefinition.content.push({text: this.avaluo.madeBy ? this.avaluo.madeBy : 'No registra.', style: ['headerTitle']});
-  
 
     return documentDefinition;
   }
 
 
   createPdfV2(avaluo: Avaluo) {
+
     this.avaluo = avaluo;
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
     var dd = this.getDocumentDefinition();

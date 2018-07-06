@@ -28,9 +28,7 @@
       </ion-item>
 
       <ion-item>
-        Destino económico
-      </ion-item>
-      <ion-item>
+        <ion-label floating>Destino económico</ion-label>
         <ion-select [(ngModel)]="data.usage" >
           <ion-option value="{{usage}}" *ngFor="let usage of usages">{{usage}}</ion-option>
         </ion-select>

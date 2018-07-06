@@ -20,49 +20,40 @@
     <ion-list>
       <ion-card *ngFor="let area of data; let i = index">
         <ion-list>
-          <ion-item>
-            Tipo:
-          </ion-item>
           <ion-item *ngIf="!data[i].usage">
+            <ion-label floating>Tipo:</ion-label>
             <ion-select [(ngModel)]="data[i].usage" *ngIf="!data[i].usage">
               <ion-option value="{{usage}}" *ngFor="let usage of usages">{{usage}}</ion-option>
             </ion-select>
           </ion-item>
           <ion-item *ngIf="data[i].usage">
-            {{data[i].usage}}
+            <ion-label floating>Tipo:</ion-label>
+            <ion-item>{{data[i].usage}}</ion-item>
           </ion-item>
           <ion-item>
-            Unidad
+            <ion-label floating>Unidad</ion-label>
+            <ion-input type="text" [(ngModel)]="data[i].unit" [ngModelOptions]="{standalone:true}"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input type="text" [(ngModel)]="data[i].unit" [ngModelOptions]="{standalone:true}" placeholder="Agregue la unidad"></ion-input>
+            <ion-label floating>Área</ion-label>
+            <ion-input type="text" [(ngModel)]="data[i].area" [ngModelOptions]="{standalone:true}"></ion-input>
           </ion-item>
           <ion-item>
-            Área
+            <ion-label floating>Vetustez</ion-label>
+            <ion-input type="text" [(ngModel)]="data[i].vetustez" [ngModelOptions]="{standalone:true}"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input type="text" [(ngModel)]="data[i].area" [ngModelOptions]="{standalone:true}" placeholder="Agregue el área"></ion-input>
-          </ion-item>
-          <ion-item>
-            Vetustez
-          </ion-item>
-          <ion-item>
-            <ion-input type="text" [(ngModel)]="data[i].vetustez" [ngModelOptions]="{standalone:true}" placeholder="Agregue la vetustez"></ion-input>
-          </ion-item>
-          <ion-item>
-            Comentarios
-          </ion-item>
-          <ion-item>
-            <ion-input type="text" [(ngModel)]="data[i].comments" [ngModelOptions]="{standalone:true}" placeholder="Agregue los comentarios"></ion-input>
+            <ion-label floating>Comentarios</ion-label>
+            <ion-input type="text" [(ngModel)]="data[i].comments" [ngModelOptions]="{standalone:true}" ></ion-input>
           </ion-item>
 
           <ion-item center>
-              <button ion-button  (click)="deleteBuiltArea(i)">
-                  Eliminar área
-                </button>
-                <button ion-button (click)="fillRateOfBuiltArea(i)">
-                  Calificar área
-                </button>
+            <button ion-button (click)="deleteBuiltArea(i)">
+              Eliminar área
+            </button>
+            <button ion-button (click)="fillRateOfBuiltArea(i)">
+              Calificar área
+            </button>
           </ion-item>
         </ion-list>
 

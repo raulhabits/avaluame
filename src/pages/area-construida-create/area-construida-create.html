@@ -18,11 +18,14 @@
   <ion-list>
     <ion-card *ngFor="let type of types; let i = index">
       <ion-list>
-        <ion-item *ngIf="data" >
+        <ion-item *ngIf="data">
           <div *ngFor="let rate of data.rates">
-              <ion-item *ngIf="rate.type == type">
-                  {{rate.subtype}} {{rate.option}}
-                </ion-item>
+            <ion-item *ngIf="rate.type == type">
+              <div class="text-rate-content">
+                <b>[ + {{rate.value}} ]</b> {{rate.option}}
+              </div>
+
+            </ion-item>
           </div>
 
         </ion-item>
@@ -31,9 +34,9 @@
         </button>
       </ion-list>
     </ion-card>
-      <button ion-button full (click)="saveData()">
-        Continuar
-      </button>
+    <button ion-button full (click)="saveData()">
+      Continuar
+    </button>
   </ion-list>
 
 </ion-content>

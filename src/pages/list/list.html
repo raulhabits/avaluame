@@ -3,21 +3,23 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>Contacto</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
+    <ion-list-header>
+      Notas.
+    </ion-list-header>
+    <ion-item>
+      <p class="text-rate-content">Esta aplicación nace como resultado del proyecto de grado de Camilo Andres Buitrago Castellanos para la obtención del
+        titulo especialista en Avaluos Catastrales Urbanos, efectuado en la Universidad Distrital Francisco José de Caldas.</p>
+    </ion-item>
+    <ion-item>
+      <p class="text-rate-content">Para mayor información con respecto al funcionamiento de la aplicación contactarse con la coordinacion de la especializacion
+        en mencion, o con el docente a cargo de la direccion del proyecto Edwin_______</p>
+
+    </ion-item>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
 </ion-content>

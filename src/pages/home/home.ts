@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, ModalOptions, Modal } from 'ionic-angular';
+import { NavController, ModalController, ModalOptions, Modal, LoadingController, Loading } from 'ionic-angular';
 import { CalificacionPage } from '../calificacion/calificacion';
 import { DatosBasicosPage } from '../datos-basicos/datos-basicos';
 import { DatosFisicosPage } from '../datos-fisicos/datos-fisicos';
@@ -13,7 +13,7 @@ import { InformacionJuridicaPage } from '../informacion-juridica/informacion-jur
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers:[AvaluoService, LoadPdfProvider]
+  providers: [AvaluoService, LoadPdfProvider]
 })
 export class HomePage {
 
@@ -23,29 +23,31 @@ export class HomePage {
   areaConstruidaPage = AreaConstruidaPage;
   informacionJuridicaPage = InformacionJuridicaPage;
   geoPositionPage = GeoPositionPage;
-  
+
   latitude: number;
   longitude: number;
 
-  constructor(public navCtrl: NavController, public avaluoService: AvaluoService, public modalController: ModalController, private geolocation: Geolocation, public loadPdf: LoadPdfProvider) {
-    this.geolocation.getCurrentPosition({maximumAge: 30}).then((resp) => {
+  loader: Loading;
+
+  constructor(public navCtrl: NavController, public avaluoService: AvaluoService, public modalController: ModalController, private geolocation: Geolocation, public loadPdf: LoadPdfProvider, public loadingCtrl: LoadingController) {
+    this.geolocation.getCurrentPosition({ maximumAge: 30 }).then((resp) => {
       this.latitude = resp.coords.latitude
-      this.longitude =  resp.coords.longitude
-     }).catch((error) => {
-       console.log('Error getting location', error);
-     });
+      this.longitude = resp.coords.longitude
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 
   loadPage(page: any, field: string) {
-    
+
     console.log("Lanzando page ", page, field);
 
     let config: ModalOptions = {
-      enableBackdropDismiss:true
+      enableBackdropDismiss: true
     };
     let modal: Modal = this.modalController.create(page, this.avaluoService.getAvaluo()[field], config);
     modal.onDidDismiss(data => {
-      if(data) {
+      if (data) {
         console.log(data);
         this.avaluoService.getAvaluo()[field] = data;
       }
@@ -57,12 +59,12 @@ export class HomePage {
     console.log("Lanzando Geolocation page ");
 
     let config: ModalOptions = {
-      enableBackdropDismiss:true
+      enableBackdropDismiss: true
     };
 
     let modal: Modal = this.modalController.create(this.geoPositionPage, this.setupDatosGeoreferenciacion(), config);
     modal.onDidDismiss(data => {
-      if(data) {
+      if (data) {
         console.log(data);
         this.avaluoService.getAvaluo().geoLocationData = data;
       }
@@ -71,7 +73,7 @@ export class HomePage {
   }
 
   setupDatosGeoreferenciacion(): DatosGeoreferenciacion {
-    if(this.avaluoService.getAvaluo().geoLocationData.exists) {
+    if (this.avaluoService.getAvaluo().geoLocationData.exists) {
       return this.avaluoService.getAvaluo().geoLocationData;
     }
 
@@ -83,9 +85,17 @@ export class HomePage {
 
     return this.avaluoService.getAvaluo().geoLocationData;
   }
- loadResultadoPage(){
-   this.loadPdf.createPdfV2(this.avaluoService.getAvaluo());
- }
+
+  loadResultadoPage() {
+    this.loader = this.loadingCtrl.create();
+    this.loader.present();
+    this.loadPdf.createPdfV2(this.avaluoService.getAvaluo());
+    this.loader.dismiss();
+  }
+
+  cleanAvaluoData() {
+    this.avaluoService.createNewAvaluo();
+  }
 
 
 }

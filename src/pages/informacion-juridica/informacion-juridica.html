@@ -19,35 +19,26 @@
       <ion-card *ngFor="let propietario of data; let i = index">
         <ion-list>
           <ion-item>
-            Identificación
-          </ion-item>
-          <ion-item>
+            <ion-label floating>Identificación</ion-label>
             <ion-select [(ngModel)]="data[i].idType">
               <ion-option value="{{idType}}" *ngFor="let idType of idTypes">{{idType}}</ion-option>
             </ion-select>
           </ion-item>
           <ion-item>
-            Numero
-          </ion-item>
-          <ion-item>
+            <ion-label floating>Numero</ion-label>
             <ion-input type="number" [(ngModel)]="data[i].id"></ion-input>
           </ion-item>
-
           <ion-item>
-            Nombres
-          </ion-item>
-          <ion-item>
+            <ion-label floating>Nombres</ion-label>
             <ion-input type="text" [(ngModel)]="data[i].firstName"></ion-input>
           </ion-item>
 
           <ion-item>
-            Apellidos
-          </ion-item>
-          <ion-item>
+            <ion-label floating>Apellidos</ion-label>
             <ion-input type="text" [(ngModel)]="data[i].lastName"></ion-input>
           </ion-item>
 
-          <button large (click)="deleteOwner(i)"></button>
+          <button full (click)="deleteOwner(i)"></button>
         </ion-list>
       </ion-card>
       <button ion-button full (click)="addOwner()">
