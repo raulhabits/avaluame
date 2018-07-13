@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Item, ViewController, ModalOptions, Modal, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Item, ViewController, ModalOptions, Modal, ModalController, AlertController } from 'ionic-angular';
 import { ItemListService } from '../../models/rates/rate-list';
 import { Type, OptionItem } from '../../models/rates/item';
 import { InformacionAdicionalAreaConstruida } from '../../models/avaluo';
@@ -23,7 +23,7 @@ export class AreaConstruidaCreatePage {
   data: InformacionAdicionalAreaConstruida;
   calificacionPage: CalificacionPage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController, public modalController: ModalController, private itemListService: ItemListService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController, public modalController: ModalController, private itemListService: ItemListService, public alertCtrl: AlertController) {
     this.data = navParams.data;
     this.types = itemListService.getTypeByUsage(this.data.usage);
   }
@@ -50,8 +50,19 @@ export class AreaConstruidaCreatePage {
   }
 
   saveData() {
-    console.log("save data", this.data);
-    this.view.dismiss(this.data);
+    const alert = this.alertCtrl.create({
+      title: 'Alerta',
+      subTitle: '¿Esta seguro de continuar?',
+      buttons: [ {text:'Si', handler: () => {
+        console.log("save data", this.data);
+        this.view.dismiss(this.data);
+      }},
+      {
+        text:'No'
+      }
+    ]
+    });
+    alert.present();
   }
 
   ionViewDidLoad() {

@@ -139,7 +139,7 @@ export class LoadPdfProvider {
 
     this.avaluo.additionalBuiltAreaData.forEach(area => {
       let areaDocument = [];
-      
+
       areaDocument.push({ text: 'Calificación de área registrada:' + area.getRateValue(), style: ['subSectionTitle'] });
       areaDocument.push({ text: ' ', style: ['fieldSeparator'] });
       areaDocument.push({ text: 'Tipo:', style: ['subSectionTitle'] });
@@ -200,10 +200,8 @@ export class LoadPdfProvider {
     documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
 
     if (areas.length !== 0) {
-      let total = 0;
-      this.avaluo.additionalBuiltAreaData.forEach(area => {
-        total += area.getRateValue();
-      });
+      let total = this.avaluo.additionalBuiltAreaData.filter(area => area.getRateValue()).reduce((sum: number, area) => sum + Number(area.getRateValue()), 0);
+     
       documentDefinition.content.push({ text: 'La calificacion total obtenida en la visita es de ' + total + '. A continuación se muestran los criterios de evaluación tenidos en cuenta con su respectiva calificación.', style: ['subSectionTitle'] });
 
       documentDefinition.content.push({ text: ' ', style: ['sectionTitle'] });
@@ -279,12 +277,12 @@ export class LoadPdfProvider {
     documentDefinition.content.push({ text: ' ', style: ['headerTitle'] });
 
     documentDefinition.content.push({ text: this.avaluo.madeBy ? this.avaluo.madeBy : 'No registra.', style: ['headerTitle'] });
-    
+
     let date = new Date();
     let dd = date.getDate();
     var mm = date.getMonth() + 1;
 
-    let meses = ['','Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    let meses = ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
     documentDefinition.content.push({ text: meses[mm] + ' ' + dd + ' de ' + date.getFullYear(), style: ['date'] });
 
@@ -293,7 +291,7 @@ export class LoadPdfProvider {
   }
 
 
-  createPdfV2(avaluo: Avaluo) {
+  createPdfV2(avaluo: Avaluo, loader: Loading) {
 
     this.avaluo = avaluo;
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -310,11 +308,13 @@ export class LoadPdfProvider {
         this.file.writeFile(this.file.dataDirectory, 'AvaluoV2.pdf', blob, { replace: true }).then(fileEntry => {
           // Open the PDf with the correct OS tools
           this.fileOpener.open(this.file.dataDirectory + 'AvaluoV2.pdf', 'application/pdf');
+          loader.dismiss();
         })
       });
     } else {
       // On a browser simply use download!
       pdfDocGenerator.download();
+      loader.dismiss();
     }
 
   }

@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Área construida</ion-title>
+    <ion-title>Áreas construidas</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -20,15 +20,11 @@
     <ion-list>
       <ion-card *ngFor="let area of data; let i = index">
         <ion-list>
-          <ion-item *ngIf="!data[i].usage">
+          <ion-item >
             <ion-label floating>Tipo:</ion-label>
-            <ion-select [(ngModel)]="data[i].usage" *ngIf="!data[i].usage">
+            <ion-select [(ngModel)]="data[i].usage" >
               <ion-option value="{{usage}}" *ngFor="let usage of usages">{{usage}}</ion-option>
             </ion-select>
-          </ion-item>
-          <ion-item *ngIf="data[i].usage">
-            <ion-label floating>Tipo:</ion-label>
-            <ion-item>{{data[i].usage}}</ion-item>
           </ion-item>
           <ion-item>
             <ion-label floating>Unidad</ion-label>
@@ -48,23 +44,23 @@
           </ion-item>
 
           <ion-item center>
-            <button ion-button (click)="deleteBuiltArea(i)">
+            <button ion-button full (click)="deleteBuiltArea(i)" color="danger" class="custom-button">
               Eliminar área
             </button>
-            <button ion-button (click)="fillRateOfBuiltArea(i)">
+            <button ion-button full (click)="fillRateOfBuiltArea(i)" class="custom-button">
               Calificar área
             </button>
           </ion-item>
         </ion-list>
 
       </ion-card>
-      <button ion-button full (click)="addBuiltArea()">
+      <button ion-button full (click)="addBuiltArea()" class="custom-button">
         Agregar área construida
       </button>
 
     </ion-list>
 
-    <button ion-button full (click)="saveData()">
+    <button ion-button full (click)="saveData()" class="custom-button">
       Continuar
     </button>
 

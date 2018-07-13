@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>area-construida-create</ion-title>
+    <ion-title>Resumen área construida</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -29,12 +29,12 @@
           </div>
 
         </ion-item>
-        <button ion-button full (click)="fillRateByUsageAndType(type)">
+        <button ion-button full (click)="fillRateByUsageAndType(type)" class="text-rate-content custom-button">
           Registrar Calificación de {{type}}
         </button>
       </ion-list>
     </ion-card>
-    <button ion-button full (click)="saveData()">
+    <button ion-button full (click)="saveData()" class="custom-button">
       Continuar
     </button>
   </ion-list>

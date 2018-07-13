@@ -10,35 +10,37 @@
 <ion-content padding>
   <h3>Avalua.me</h3>
 
-  <ion-list no-lines>
-    <p>
-      En esta aplicacion se pueden encontrar todos los campos contenidos en el FORMATO DE VISITA TECNICA PUNTUAL que el avaluador
-      debe diligenciar.
-    </p>
+  <ion-list>
+    <ion-item>
+      <p class="text-rate-content">
+        En esta aplicacion se pueden encontrar todos los campos contenidos en el <b>FORMATO DE VISITA TECNICA PUNTUAL</b> que el avaluador
+        debe diligenciar.
+      </p>
+    </ion-item>
 
-    <button ion-button full (click)="loadPage(datosBasicosPage, 'basicData')">
-      Lanzar datos basicos
+    <button ion-button full (click)="loadPage(datosBasicosPage, 'basicData')" class="custom-button">
+      Datos básicos
     </button>
-    <button ion-button full (click)="loadPage(datosFisicosPage, 'physicalData')">
-      Lanzar datos físicos
+    <button ion-button full (click)="loadPage(datosFisicosPage, 'physicalData')" class="custom-button">
+      Datos físicos
     </button>
-    <button ion-button full (click)="loadPage(areaConstruidaPage, 'additionalBuiltAreaData')">
+    <button ion-button full (click)="loadPage(areaConstruidaPage, 'additionalBuiltAreaData')" class="custom-button">
       Información area construida
     </button>
-    <button ion-button full (click)="loadPage(informacionJuridicaPage, 'owners')">
+    <button ion-button full (click)="loadPage(informacionJuridicaPage, 'owners')" class="custom-button">
       Información jurídica
     </button>
-    <button ion-button full (click)="loadGeolocationPage()">
+    <button ion-button full (click)="loadGeolocationPage()" class="custom-button">
       Croquis
     </button>
     <ion-item>
       <ion-label floating>Elaborado por:</ion-label>
       <ion-input type="text" [(ngModel)]="avaluoService.getAvaluo().madeBy" [ngModelOptions]="{standalone:true}"></ion-input>
     </ion-item>
-    <button ion-button full (click)="loadResultadoPage()">
+    <button ion-button full (click)="loadResultadoPage()" class="custom-button">
       Visualizar reporte
     </button>
-    <button ion-button full (click)="cleanAvaluoData()">
+    <button ion-button full (click)="cleanAvaluoData()" class="custom-button">
       Limpiar datos del avaluo (nuevo)
     </button>
   </ion-list>

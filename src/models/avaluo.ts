@@ -65,12 +65,7 @@ export class InformacionAdicionalAreaConstruida {
     }
 
     getRateValue(): number {
-        let value = 0;
-        if(this.rates) {
-            this.rates.forEach(rate => {
-                value += rate.value;
-            });
-        }
+        let value:number = this.rates.filter(rate => rate.value).reduce((sum: number, rate) => sum + Number(rate.value), 0); 
         return value;
     }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, ModalOptions, Modal, LoadingController, Loading } from 'ionic-angular';
+import { NavController, ModalController, ModalOptions, Modal, LoadingController, Loading, AlertController } from 'ionic-angular';
 import { CalificacionPage } from '../calificacion/calificacion';
 import { DatosBasicosPage } from '../datos-basicos/datos-basicos';
 import { DatosFisicosPage } from '../datos-fisicos/datos-fisicos';
@@ -29,7 +29,7 @@ export class HomePage {
 
   loader: Loading;
 
-  constructor(public navCtrl: NavController, public avaluoService: AvaluoService, public modalController: ModalController, private geolocation: Geolocation, public loadPdf: LoadPdfProvider, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public avaluoService: AvaluoService, public modalController: ModalController, private geolocation: Geolocation, public loadPdf: LoadPdfProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
     this.geolocation.getCurrentPosition({ maximumAge: 30 }).then((resp) => {
       this.latitude = resp.coords.latitude
       this.longitude = resp.coords.longitude
@@ -87,10 +87,37 @@ export class HomePage {
   }
 
   loadResultadoPage() {
+    
     this.loader = this.loadingCtrl.create();
-    this.loader.present();
-    this.loadPdf.createPdfV2(this.avaluoService.getAvaluo());
-    this.loader.dismiss();
+    let total:number = this.avaluoService.getAvaluo()
+    .additionalBuiltAreaData
+    .filter(area => area.area).reduce((sum: number, area) => sum + Number(area.area), 0);
+    console.log("primer submit", this.avaluoService.getAvaluo().physicalData, total);
+    if(Number(total) !== Number(this.avaluoService.getAvaluo().physicalData.builtArea)) {
+
+      console.log("no hay match");
+      const alert = this.alertCtrl.create({
+        title: 'Alerta',
+        subTitle: '¿El total de áreas construidas no corresponde con el total registrado en la calificación fisica, desea continuar?',
+        buttons: [{
+          text: 'Si', handler: () => this.loadPdfService(this.loader)
+        },
+        {
+          text: 'No'
+        }
+        ]
+      });
+  
+      alert.present();
+    }
+    else {
+      this.loadPdfService(this.loader);
+    }
+  }
+
+  loadPdfService(loader: Loading) {
+    loader.present();
+    this.loadPdf.createPdfV2(this.avaluoService.getAvaluo(), this.loader);
   }
 
   cleanAvaluoData() {

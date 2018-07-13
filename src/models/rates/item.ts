@@ -1,7 +1,7 @@
 
 export enum Usage {
     RESIDENCIAL = "RESIDENCIAL",
-    INDUSTRIAL_COMERCIAL = "COMERCIAL"
+    INDUSTRIAL_COMERCIAL = "INDUSTRIAL, COMERCIAL"
 }
 
 export enum Type {

@@ -38,16 +38,16 @@
             <ion-input type="text" [(ngModel)]="data[i].lastName"></ion-input>
           </ion-item>
 
-          <button full (click)="deleteOwner(i)"></button>
+          <button full (click)="deleteOwner(i)" class="custom-button" danger></button>
         </ion-list>
       </ion-card>
-      <button ion-button full (click)="addOwner()">
+      <button ion-button full (click)="addOwner()" class="custom-button">
         Agregar propietario
       </button>
     </ion-list>
 
 
-    <button ion-button full (click)="saveData()">
+    <button ion-button full (click)="saveData()" class="custom-button">
       Continuar
     </button>
   </ion-list>

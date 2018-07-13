@@ -36,19 +36,12 @@
     <ion-item [hidden]="!image">
       <img [src]="image" (load)="onLoad()" />
     </ion-item>
-
-    <ion-item>
-      <button type="button" ion-button full (click)="takePicture()">
-        <ion-icon name="camera"></ion-icon>
-      </button>
-
-    </ion-item>
-
-    <ion-item>
-      <button ion-button  full (click)="saveData()" large icon-right>
+    <button ion-button full (click)="takePicture()" class="custom-button">
+        <ion-icon ios="ios-camera" md="md-camera"></ion-icon>
+    </button>
+    <button ion-button  full (click)="saveData()" class="custom-button">
         Continuar
       </button>
-    </ion-item>
   </ion-list>
 
 
